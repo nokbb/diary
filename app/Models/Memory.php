@@ -15,10 +15,27 @@ class Memory extends Model
     protected $fillable =
     [
         'post_id',
+        'user_id',
         'file_path',
         'caption',
         'entry',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'category_id'
     ];
+
+    /**
+     * このメモリーを所有するユーザーを取得
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'photo_id');
+    }
+
+
 }

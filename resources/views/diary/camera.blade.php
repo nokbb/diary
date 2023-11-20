@@ -23,11 +23,11 @@
 </header>
 <div class="inner">
   <main>
-    <div class="camera-container">
+    <!-- <div class="camera-container">
       <div class="camera-btn">
         <input
           type="button"
-          onclick="toggleCameraAction()"
+          onclick="cameraInitSmartphoneSupport()"
           id="camera-action-btn"
         />
       </div>
@@ -83,6 +83,6 @@
         </ul>
         <button type="submit" class="addition-btn">追加</button>
       </div>
-    </form>
+    </form> -->
   </main>
 </div>

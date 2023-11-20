@@ -25,21 +25,23 @@
 }
 
 .myPage {
-  width: 100px;
   display: block;
-  margin: 0 auto;
-  text-align: center;
   color: #000;
 }
 
 .myPage-img {
-  margin-top: 1rem;
+  margin: 1rem auto;
+  width: 100px;
   height: 100px;
   
   img {
     border: 1px solid #000;
     border-radius: 100%;
   }
+}
+
+.mypage-container {
+  text-align: center;
 }
 
 .myName {
@@ -49,51 +51,32 @@
 .myUserName {
 }
 
-.tab-area {
+.tabMenu {
   display: flex;
-  justify-content: space-around;
   margin-top: 1rem;
+  margin-bottom: 1rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid #000;
+  overflow-x: auto;
 }
 
-.tab {
+.tabMenu-list {
   font-size: 1.5rem;
   text-align: center;
   position: relative;
   cursor: pointer;
-  border-bottom: 2px solid #000;
-}
+  padding: 5px;
+  flex-shrink: 0;
 
-.tab.active {
-  border-color: #6299e6;
-}
-.panel-area {
-
-}
-
-.panel {
-  display: none;
-}
-
-.panel.active {
-  display: block;
+  & + & {
+    margin-left: 1rem;
+  }
 }
 
 .private {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
-}
-
-.lock-open {
-
-}
-
-.lock,
-.lock1,
-.lock2 {
-  display: none;
 }
 
 .lock-btn {
@@ -107,7 +90,7 @@
   width: 60px;
   height: 30px;
   border-radius: 50px;
-  background-color: #dddddd;
+  background-color: #4bd865;
   cursor: pointer;
   transition: background-color .4s;
   margin-left: 10px;
@@ -116,7 +99,7 @@
     display: none;
 
     &:checked+.slider {
-      background-color: #4bd865;
+      background-color: #dddddd;
     }
 
     &:checked+.slider::after {

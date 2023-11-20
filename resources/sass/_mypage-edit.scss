@@ -12,7 +12,6 @@
 
   input {
     flex: 1;
-    outline: none;
   }
 }
 
@@ -30,4 +29,8 @@
 
 .myUserName-container {
   padding: 1rem 0;
+}
+
+#deleteProfileImageBtn {
+  margin-top: 0.5rem;
 }

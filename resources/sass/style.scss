@@ -1,19 +1,20 @@
-@import "login";
-@import "signup";
-@import "main";
-@import "camera";
-@import "mypage";
-@import "memories";
-@import "memory-detail";
-@import "memory-edit";
-@import "mypage-edit";
-@import "friend";
-@import "friend-detail";
-@import "search";
-@import "search-result";
-@import "reset";
-@import "reset-complete";
-@import "resetting";
+@import "_login";
+@import "_signup";
+@import "_home";
+@import "_camera";
+@import "_mypage";
+@import "_memories";
+@import "_memory-detail";
+@import "_memory-edit";
+@import "_mypage-edit";
+@import "_friend";
+@import "_friend-detail";
+@import "_search";
+@import "_search-result";
+@import "_reset";
+@import "_reset-complete";
+@import "_resetting";
+
 
 /*=====================================================================
 # common
@@ -22,6 +23,8 @@ html,
 body {
   width: 100%;
   height: 100%;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 a {
@@ -42,4 +45,9 @@ button {
 img {
   width: 100%;
   height: 100%;
+}
+
+input,
+textarea {
+  outline-color: #629ae6;
 }

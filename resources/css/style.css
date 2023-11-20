@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*=====================================================================
 # login
 ===================================================================== */
@@ -165,12 +166,27 @@ span.eye {
 .header-list a {
   color: inherit;
   font-size: 1.5rem;
+  display: block;
+}
+
+.header-list:first-child {
+  flex-basis: 40px;
+}
+
+.my-diary {
+  height: auto;
+  width: 50%;
+  margin: 2rem auto;
+}
+.my-diary .diary-img {
+  height: 240px;
 }
 
 .friend-diary {
   padding: 0 1rem;
   margin: 1rem 0;
   display: block;
+  color: #000;
 }
 
 .user-container {
@@ -183,6 +199,16 @@ span.eye {
 
 .user-icon {
   margin-right: 1rem;
+  width: 30px;
+  height: 30px;
+  position: relative;
+}
+.user-icon img,
+.user-icon i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .user-name {
@@ -193,7 +219,21 @@ span.eye {
   margin-top: 0.5rem;
   outline: 1px solid #000;
   border-radius: 5%;
-  height: 336px;
+  height: 480px;
+  position: relative;
+}
+.diary-img img {
+  border-radius: 5%;
+  object-fit: contain;
+}
+
+.like-profilePic {
+  border: 1px solid #000;
+  border-radius: 50%;
+}
+
+.like-profilePic img {
+  border-radius: 50%;
 }
 
 .diary-caption {
@@ -201,17 +241,30 @@ span.eye {
   margin-top: 1rem;
 }
 
+.diary-entry {
+  text-align: center;
+}
+
 .camera-btn {
   position: fixed;
   bottom: 0;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  border: 1px solid #000;
+  border-radius: 50%;
 }
 
 #camera-action-btn {
   width: 100px;
   height: 100px;
   border-radius: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 /*=====================================================================
@@ -357,15 +410,13 @@ input[type=radio]:checked + label {
 }
 
 .myPage {
-  width: 100px;
   display: block;
-  margin: 0 auto;
-  text-align: center;
   color: #000;
 }
 
 .myPage-img {
-  margin-top: 1rem;
+  margin: 1rem auto;
+  width: 100px;
   height: 100px;
 }
 .myPage-img img {
@@ -373,48 +424,39 @@ input[type=radio]:checked + label {
   border-radius: 100%;
 }
 
+.mypage-container {
+  text-align: center;
+}
+
 .myName {
   margin-top: 0.5rem;
 }
 
-.tab-area {
+.tabMenu {
   display: flex;
-  justify-content: space-around;
   margin-top: 1rem;
+  margin-bottom: 1rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid #000;
+  overflow-x: auto;
 }
 
-.tab {
+.tabMenu-list {
   font-size: 1.5rem;
   text-align: center;
   position: relative;
   cursor: pointer;
-  border-bottom: 2px solid #000;
+  padding: 5px;
+  flex-shrink: 0;
 }
-
-.tab.active {
-  border-color: #6299e6;
-}
-
-.panel {
-  display: none;
-}
-
-.panel.active {
-  display: block;
+.tabMenu-list + .tabMenu-list {
+  margin-left: 1rem;
 }
 
 .private {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
-}
-
-.lock,
-.lock1,
-.lock2 {
-  display: none;
 }
 
 .lock-btn {
@@ -428,7 +470,7 @@ input[type=radio]:checked + label {
   width: 60px;
   height: 30px;
   border-radius: 50px;
-  background-color: #dddddd;
+  background-color: #4bd865;
   cursor: pointer;
   transition: background-color 0.4s;
   margin-left: 10px;
@@ -437,7 +479,7 @@ input[type=radio]:checked + label {
   display: none;
 }
 .toggle-button input:checked + .slider {
-  background-color: #4bd865;
+  background-color: #dddddd;
 }
 .toggle-button input:checked + .slider::after {
   left: 30px;
@@ -494,13 +536,75 @@ input[type=radio]:checked + label {
 /*=====================================================================
 # memories
 ===================================================================== */
+.fc-theme-standard .fc-scrollgrid {
+  border: none;
+}
+
+.fc .fc-daygrid-day-top {
+  position: absolute;
+  z-index: 7;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.fc .fc-daygrid-body-natural .fc-daygrid-day-events {
+  height: 5rem;
+  margin: 0 2px;
+}
+
+.fc .fc-daygrid-day-events {
+  margin-top: 0;
+}
+
+.fc .fc-daygrid-event-harness {
+  height: 100%;
+}
+
+.fc .fc-daygrid-event {
+  height: 100%;
+  margin-top: 0;
+}
+
+/*今日の背景色*/
+.fc .fc-daygrid-day.fc-day-today {
+  background-image: radial-gradient(circle, #000 calc(25% - 1px), transparent 25%);
+  background-color: transparent;
+  color: #fff;
+}
+
+.fc .fc-daygrid-event-harness {
+  border: 2px solid #000;
+  border-radius: 8px;
+}
+
+.fc-theme-standard td,
+.fc-theme-standard th {
+  border: none;
+}
+
+.fc-direction-ltr .fc-daygrid-event.fc-event-end,
+.fc-direction-rtl .fc-daygrid-event.fc-event-start {
+  margin: 0;
+  padding: 0;
+}
+.fc-direction-ltr .fc-daygrid-event.fc-event-end img,
+.fc-direction-rtl .fc-daygrid-event.fc-event-start img {
+  border-radius: 5px;
+  object-fit: cover;
+  opacity: 0.7;
+}
+
 /*=====================================================================
 # memory-detail
 ===================================================================== */
 .modal-container {
-  position: fixed;
+  position: absolute;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 900px;
   width: 100%;
   height: 100%;
   transition: all 0.3s;
@@ -557,6 +661,14 @@ input[type=radio]:checked + label {
   margin: 0 auto;
 }
 
+.splide__list {
+  height: auto;
+}
+
+#main-carousel-list {
+  justify-content: center;
+}
+
 /*=====================================================================
 # memory-edit
 ===================================================================== */
@@ -587,7 +699,6 @@ input[type=radio]:checked + label {
 }
 .mypage-edit-container input {
   flex: 1;
-  outline: none;
 }
 
 .myName-container {
@@ -606,12 +717,17 @@ input[type=radio]:checked + label {
   padding: 1rem 0;
 }
 
+#deleteProfileImageBtn {
+  margin-top: 0.5rem;
+}
+
 /*=====================================================================
 # friend
 ===================================================================== */
 .friend-profile {
   position: relative;
   z-index: 0;
+  height: 480px;
 }
 
 .friend-img {
@@ -622,6 +738,7 @@ input[type=radio]:checked + label {
 .friend-img img {
   position: relative;
   z-index: -1;
+  object-fit: contain;
 }
 
 .friend-name-container {
@@ -691,7 +808,8 @@ input[type=radio]:checked + label {
   right: 0;
   bottom: 0;
   background: transparent;
-  padding: 0.2rem 1rem;
+  padding: 0.5rem 1rem;
+  color: #000;
 }
 
 /*=====================================================================
@@ -773,6 +891,8 @@ html,
 body {
   width: 100%;
   height: 100%;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 a {
@@ -793,4 +913,9 @@ button:hover {
 img {
   width: 100%;
   height: 100%;
+}
+
+input,
+textarea {
+  outline-color: #629ae6;
 }/*# sourceMappingURL=style.css.map */

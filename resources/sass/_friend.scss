@@ -4,6 +4,7 @@
 .friend-profile {
   position: relative;
   z-index: 0;
+  height: 480px;
 }
 
 .friend-img {
@@ -14,6 +15,7 @@
   img {
     position: relative;
     z-index: -1;
+    object-fit: contain;
   }
 }
 

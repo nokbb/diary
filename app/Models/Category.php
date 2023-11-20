@@ -19,4 +19,12 @@ class Category extends Model
         'name',
         'icon'
     ];
+
+    /**
+     * このカテゴリーに属するメモリのリレーションを定義
+     */
+    public function memories()
+    {
+        return $this->hasMany(Memory::class);
+    }
 }

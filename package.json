@@ -7,15 +7,27 @@
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": "mix --production",
+        "build": "webpack --mode production"
     },
     "devDependencies": {
-        "axios": "^0.21",
+        "axios": "^1.6.2",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.66.1",
-        "sass-loader": "^12.6.0"
+        "sass-loader": "^12.6.0",
+        "vue-loader": "^16.8.3"
+    },
+    "dependencies": {
+        "@fullcalendar/daygrid": "^6.1.9",
+        "@fullcalendar/vue3": "^6.1.9",
+        "@splidejs/splide": "^4.1.4",
+        "@splidejs/vue-splide": "^0.6.12",
+        "@vue/compiler-sfc": "^3.3.7",
+        "vue": "^3.3.7",
+        "vue-router": "^4.2.5",
+        "vuex": "^4.0.2"
     }
 }

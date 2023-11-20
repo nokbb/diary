@@ -36,7 +36,7 @@
         <span class="eye"><img src="img/close.jpg" alt="eye"></span>
       </div>
         <button type="submit" class="login-btn">新規登録</button>
-        <a href="" class="login-screen">ログイン画面へ</a>
+        <a href="{{ route('showLogin') }}" class="login-screen">ログイン画面へ</a>
     </fieldset>
   </form>
 </div>

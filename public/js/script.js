@@ -23,137 +23,6 @@ $(document).ready(function () {
 });
 
 
-const cameraWidth = 400;
-const cameraHeight = 400;
-
-// カメラを起動
-const cameraInitSmartphoneSupport = () => {
-  const video = $("#camera")[0];
-
-  // スマホからの閲覧か
-  const isMobile = /iPhone|Android/.test(navigator.userAgent);
-
-  const cameraSetting = {
-    audio: false,
-    video: {
-      width: isMobile ? cameraHeight : cameraWidth,
-      height: isMobile ? cameraWidth : cameraHeight,
-      facingMode: "environment",
-    },
-  };
-
-  // HTTPSのチェック
-  // if (window.location.protocol !== "https:") {
-  //   alert("カメラを利用するにはHTTPSが必要です。");
-  //   return;
-  // }
-
-  navigator.mediaDevices
-    .getUserMedia(cameraSetting)
-    .then((mediaStream) => {
-      video.srcObject = mediaStream;
-    })
-    .catch((err) => {
-      console.log(err.toString());
-      alert(
-        "カメラへのアクセスが許可されていないか、利用できるカメラがありません。"
-      );
-    });
-};
-
-const shoot = () => {
-  const video = $("#camera")[0];
-  const canvas = $("#canvas")[0];
-  canvas.width = cameraWidth;
-  canvas.height = cameraHeight;
-
-  const ctx = canvas.getContext("2d");
-  ctx.drawImage(video, 0, 0, cameraWidth, cameraHeight);
-
-  // キャンバス上の×ボタンを表示
-  $("#clear-canvas-btn").show();
-
-  // 撮影後の状態設定
-  isCameraOn = false;
-  $("#camera-action-btn").val("カメラ起動");
-};
-
-// カメラを閉じる
-const closeCamera = () => {
-  const $video = $("#camera");
-  const stream = $video[0].srcObject;
-
-  if (stream) {
-    const tracks = stream.getTracks();
-    tracks.forEach((track) => track.stop());
-  }
-
-  $video[0].srcObject = null;
-};
-
-// キャンバスをクリアする関数
-const clearCanvas = () => {
-  const canvas = $("#canvas")[0];
-  const ctx = canvas.getContext("2d");
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // キャンバス上の×ボタンを非表示にする
-  $("#clear-canvas-btn").hide();
-
-  // カメラボタンのテキストを撮影可能な状態に更新
-  $("#camera-action-btn").val("撮影");
-};
-
-$(document).ready(function () {
-  let isCameraOn = false;
-
-  $("#canvas").hide();
-  $("#camera").show();
-
-  // 現在のURLを取得
-  const currentURL = window.location.pathname;
-
-  // cameraが開かれた場合、自動的にカメラを起動
-  if (currentURL.endsWith('camera.html')) {
-    cameraInitSmartphoneSupport();
-    isCameraOn = true;
-    $("#camera-action-btn").val("撮影");
-  }
-
-  $("#camera-action-btn").on("click", function () {
-    if (isCameraOn) {
-      shoot();
-      $("#canvas").show();
-      $("#camera").hide();
-      $("#camera-action-btn").hide();
-      $(".text-container").show();
-      $(".addition-container").show();
-    }
-    // main.htmlの場合cameraにリダイレクト
-    if (currentURL.endsWith('main.html')) {
-      window.location.href = 'camera.html';
-    }
-  });
-
-  $(".close-camera").on("click", function () {
-    closeCamera();
-    isCameraOn = false;
-    // $("#camera-action-btn").val("カメラ起動");
-    window.location.href = 'main.html';
-  });
-
-  $("#clear-canvas-btn").on("click", function () {
-    clearCanvas();
-    $("#camera").show();
-    $("#canvas").hide();
-    $("#camera-action-btn").show();
-    $(".text-container").hide();
-    $(".addition-container").hide();
-  });
-});
-
-
-
 //行数が動的に変わる
 $(function () {
   $(document).on("input", "textarea.auto_resize", function () {
@@ -257,3 +126,52 @@ $(document).ready(function () {
     }
   });
 });
+
+//AJAXのセットアップ
+$.ajaxSetup({
+  headers: {
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+  },
+});
+
+//プロフィール削除
+$(document).ready(function () {
+  $("#deleteProfileImageBtn").click(function () {
+      // ユーザーに確認メッセージを表示
+      if (confirm("本当にプロフィール画像を削除しますか？")) {
+          // ここでAjaxなどを使用してサーバーに削除のリクエストを送ることができます
+          $.ajax({
+              url: "/profile-pic/delete", // これは実際のエンドポイントに置き換える必要があります
+              method: "POST", // or DELETE or whatever method you want to use
+              data: {
+                  _token: $('meta[name="csrf-token"]').attr("content"), // CSRFトークンをLaravelに送信するために必要
+              },
+              success: function (response) {
+                  if (response.success) {
+                      alert("画像が削除されました。");
+                      location.reload(); // ページを再読み込みして変更を反映する
+                  } else {
+                      alert("エラーが発生しました。再試行してください。");
+                  }
+              },
+              error: function () {
+                  alert("エラーが発生しました。再試行してください。");
+              },
+          });
+      }
+  });
+});
+
+
+// 画像プレビュー
+$('#profile_pic').on('change', function(e) {
+  const file = e.target.files[0];
+  if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+          $('.myPage-img img').attr('src', e.target.result);
+      }
+      reader.readAsDataURL(file);
+  }
+});
+

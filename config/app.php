@@ -174,6 +174,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        ##下記を追加##
+        App\Providers\RepositoryServiceProvider::class,
 
     ],
 
