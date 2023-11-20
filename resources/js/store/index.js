@@ -121,23 +121,25 @@ export default createStore({
             commit("SET_ACTIVE_CATEGORY", categoryId);
             commit("FILTER_MEMORIES", categoryId);
         },
-        addCategory({ commit }, categoryName) {
+        addCategory({ commit, dispatch }, categoryName) {
             axios
                 .post("/api/categories", { name: categoryName })
                 .then((response) => {
                     commit("ADD_CATEGORY", response.data);
                     commit("SET_ACTIVE_CATEGORY", response.data.id);
+                    dispatch("fetchUserCategories"); // ユーザーカテゴリを再取得
                 })
                 .catch((error) => {
                     console.error("カテゴリの追加に失敗しました。", error);
                 });
         },
-        removeCategory({ commit }, categoryId) {
+        removeCategory({ commit, dispatch }, categoryId) {
             if (confirm("このカテゴリーを削除してもよろしいですか？")) {
                 axios
                     .delete(`/api/categories/${categoryId}`)
                     .then(() => {
                         commit("REMOVE_CATEGORY", categoryId);
+                        dispatch("fetchUserCategories"); // ユーザーカテゴリを再取得
                     })
                     .catch((error) => {
                         console.error("カテゴリの削除に失敗しました。", error);

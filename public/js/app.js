@@ -21593,21 +21593,25 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       commit("FILTER_MEMORIES", categoryId);
     },
     addCategory: function addCategory(_ref5, categoryName) {
-      var commit = _ref5.commit;
+      var commit = _ref5.commit,
+        dispatch = _ref5.dispatch;
       axios__WEBPACK_IMPORTED_MODULE_1__["default"].post("/api/categories", {
         name: categoryName
       }).then(function (response) {
         commit("ADD_CATEGORY", response.data);
         commit("SET_ACTIVE_CATEGORY", response.data.id);
+        dispatch("fetchUserCategories"); // ユーザーカテゴリを再取得
       })["catch"](function (error) {
         console.error("カテゴリの追加に失敗しました。", error);
       });
     },
     removeCategory: function removeCategory(_ref6, categoryId) {
-      var commit = _ref6.commit;
+      var commit = _ref6.commit,
+        dispatch = _ref6.dispatch;
       if (confirm("このカテゴリーを削除してもよろしいですか？")) {
         axios__WEBPACK_IMPORTED_MODULE_1__["default"]["delete"]("/api/categories/".concat(categoryId)).then(function () {
           commit("REMOVE_CATEGORY", categoryId);
+          dispatch("fetchUserCategories"); // ユーザーカテゴリを再取得
         })["catch"](function (error) {
           console.error("カテゴリの削除に失敗しました。", error);
         });
