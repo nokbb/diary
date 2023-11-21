@@ -2,7 +2,7 @@
   <!-- エラーメッセージの表示 -->
   <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
 
-  <button @click="addFriend" :disabled="isProcessing" :class="{ 'following': isFollowing }">
+  <button @click.prevent="handleFriendAction" :disabled="isProcessing" :class="{ 'following': isFollowing }">
     {{ isFollowing ? 'フォロー中' : 'フォロー' }}
   </button>
 </template>
@@ -21,38 +21,35 @@ export default {
     this.checkFollowingStatus();
   },
   methods: {
-    async addFriend() {
-      if (this.isFollowing) {
-        // フォロー中の場合は、フォロー解除の確認を行う
-        if (confirm('フォローを解除しますか？')) {
-          await this.deleteFriend();
-        }
-      } else {
-        // フォローしていない場合は、通常のフォロー処理を行う
-        this.isProcessing = true;
-        this.errorMessage = null;
-        try {
-          await axios.post('/api/friend/add', { friend_id: this.friendId });
-          this.isFollowing = true;
-        } catch (error) {
-          // エラー処理...
-        } finally {
-          this.isProcessing = false;
-        }
-      }
-    },
-
-    async deleteFriend() {
+    async handleFriendAction() {
       this.isProcessing = true;
+      this.errorMessage = null;
+
       try {
-        await axios.post('/api/friend/delete', { friend_id: this.friendId });
-        this.isFollowing = false;
-        // 解除成功時の処理...
+        if (this.isFollowing) {
+          // フォロー中の場合は、フォロー解除の確認を行う
+          if (confirm('フォローを解除しますか？')) {
+            await this.deleteFriend();
+          }
+        } else {
+          // フォローしていない場合は、通常のフォロー処理を行う
+          await this.addFriend();
+        }
       } catch (error) {
-        // エラー処理...
+        this.errorMessage = '処理中にエラーが発生しました';
       } finally {
         this.isProcessing = false;
       }
+    },
+
+    async addFriend() {
+      await axios.post('/api/friend/add', { friend_id: this.friendId });
+      this.isFollowing = true;
+    },
+
+    async deleteFriend() {
+      await axios.post('/api/friend/delete', { friend_id: this.friendId });
+      this.isFollowing = false;
     },
     
     async checkFollowingStatus() {

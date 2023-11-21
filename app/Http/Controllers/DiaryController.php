@@ -27,10 +27,10 @@ class DiaryController extends Controller
         $user = Auth::user();
         $memory = null;
         $friendMemories = collect();
+        $hoursAgo24 = Carbon::now()->subHours(24); // 現在時刻から24時間以内のDateTimeインスタンスを取得
 
         // ログインしている場合のみ、メモリーを取得
         if ($user) {
-            $hoursAgo24 = Carbon::now()->subHours(24); // 現在時刻から24時間以内のDateTimeインスタンスを取得
             $memory = Memory::where('user_id', $user->id)
                             ->where('created_at', '>=', $hoursAgo24)
                             ->latest()
@@ -47,12 +47,12 @@ class DiaryController extends Controller
                                     ->first();
 
                 if ($friendMemory) {
-        $likeStatus = $this->checkLikeStatus($friendMemory);
-        // デバッグ用
-        \Log::info('Like Status for Memory ID ' . $friendMemory->id, $likeStatus);
-        $friendMemory->likeStatus = $likeStatus;
-        $friendMemories->push($friendMemory);
-    }
+                $likeStatus = $this->checkLikeStatus($friendMemory);
+                // デバッグ用
+                \Log::info('Like Status for Memory ID ' . $friendMemory->id, $likeStatus);
+                $friendMemory->likeStatus = $likeStatus;
+                $friendMemories->push($friendMemory);
+            }
 
             }
         }

@@ -19995,41 +19995,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.checkFollowingStatus();
   },
   methods: {
-    addFriend: function addFriend() {
+    handleFriendAction: function handleFriendAction() {
       var _this = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
+              _this.isProcessing = true;
+              _this.errorMessage = null;
+              _context.prev = 2;
               if (!_this.isFollowing) {
-                _context.next = 6;
+                _context.next = 9;
                 break;
               }
               if (!confirm('フォローを解除しますか？')) {
-                _context.next = 4;
+                _context.next = 7;
                 break;
               }
-              _context.next = 4;
+              _context.next = 7;
               return _this.deleteFriend();
-            case 4:
-              _context.next = 19;
-              break;
-            case 6:
-              // フォローしていない場合は、通常のフォロー処理を行う
-              _this.isProcessing = true;
-              _this.errorMessage = null;
-              _context.prev = 8;
+            case 7:
               _context.next = 11;
-              return axios.post('/api/friend/add', {
-                friend_id: _this.friendId
-              });
+              break;
+            case 9:
+              _context.next = 11;
+              return _this.addFriend();
             case 11:
-              _this.isFollowing = true;
               _context.next = 16;
               break;
-            case 14:
-              _context.prev = 14;
-              _context.t0 = _context["catch"](8);
+            case 13:
+              _context.prev = 13;
+              _context.t0 = _context["catch"](2);
+              _this.errorMessage = '処理中にエラーが発生しました';
             case 16:
               _context.prev = 16;
               _this.isProcessing = false;
@@ -20038,67 +20035,74 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[8, 14, 16, 19]]);
+        }, _callee, null, [[2, 13, 16, 19]]);
       }))();
     },
-    deleteFriend: function deleteFriend() {
+    addFriend: function addFriend() {
       var _this2 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
-              _this2.isProcessing = true;
-              _context2.prev = 1;
-              _context2.next = 4;
-              return axios.post('/api/friend/delete', {
+              _context2.next = 2;
+              return axios.post('/api/friend/add', {
                 friend_id: _this2.friendId
               });
-            case 4:
-              _this2.isFollowing = false;
-              // 解除成功時の処理...
-              _context2.next = 9;
-              break;
-            case 7:
-              _context2.prev = 7;
-              _context2.t0 = _context2["catch"](1);
-            case 9:
-              _context2.prev = 9;
-              _this2.isProcessing = false;
-              return _context2.finish(9);
-            case 12:
+            case 2:
+              _this2.isFollowing = true;
+            case 3:
             case "end":
               return _context2.stop();
           }
-        }, _callee2, null, [[1, 7, 9, 12]]);
+        }, _callee2);
       }))();
     },
-    checkFollowingStatus: function checkFollowingStatus() {
+    deleteFriend: function deleteFriend() {
       var _this3 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-        var response;
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) switch (_context3.prev = _context3.next) {
             case 0:
-              _context3.prev = 0;
-              _context3.next = 3;
-              return axios.get('/api/friend/check-status', {
-                params: {
-                  friend_id: _this3.friendId
-                }
+              _context3.next = 2;
+              return axios.post('/api/friend/delete', {
+                friend_id: _this3.friendId
               });
+            case 2:
+              _this3.isFollowing = false;
             case 3:
-              response = _context3.sent;
-              _this3.isFollowing = response.data.isFollowing;
-              _context3.next = 9;
-              break;
-            case 7:
-              _context3.prev = 7;
-              _context3.t0 = _context3["catch"](0);
-            case 9:
             case "end":
               return _context3.stop();
           }
-        }, _callee3, null, [[0, 7]]);
+        }, _callee3);
+      }))();
+    },
+    checkFollowingStatus: function checkFollowingStatus() {
+      var _this4 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.prev = 0;
+              _context4.next = 3;
+              return axios.get('/api/friend/check-status', {
+                params: {
+                  friend_id: _this4.friendId
+                }
+              });
+            case 3:
+              response = _context4.sent;
+              _this4.isFollowing = response.data.isFollowing;
+              _context4.next = 9;
+              break;
+            case 7:
+              _context4.prev = 7;
+              _context4.t0 = _context4["catch"](0);
+            case 9:
+            case "end":
+              return _context4.stop();
+          }
+        }, _callee4, null, [[0, 7]]);
       }))();
     }
   }
@@ -21009,9 +21013,9 @@ var _hoisted_1 = {
 var _hoisted_2 = ["disabled"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" エラーメッセージの表示 "), $data.errorMessage ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errorMessage), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    onClick: _cache[0] || (_cache[0] = function () {
-      return $options.addFriend && $options.addFriend.apply($options, arguments);
-    }),
+    onClick: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+      return $options.handleFriendAction && $options.handleFriendAction.apply($options, arguments);
+    }, ["prevent"])),
     disabled: $data.isProcessing,
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'following': $data.isFollowing
@@ -23724,7 +23728,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.splide__slide[data-v-39cfb858] {\n  opacity: .6;\n}\n/* 選択されているサムネイルだけ透過しない */\n.splide__slide.is-active[data-v-39cfb858] {\n  opacity: 1;\n}\n/* 画像サイズ調整 */\n.splide__slide img[data-v-39cfb858] {\n  height: auto;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.splide__list[data-v-39cfb858] {\n  height: auto;\n}\n\n\n/* 追加ボタンのスタイル */\nbutton[data-v-39cfb858] {\n  margin-left: 10px;\n  background-color: #6299e6;\n  border: none;\n  color: white;\n  padding: 5px 10px;\n  border-radius: 5px;\n  cursor: pointer;\n}\n.vue-memory-meatball-menu i[data-v-39cfb858] {\n  font-size: 1.5rem;\n}\n.vue-modal-container[data-v-39cfb858] {\n  position: absolute;\n  z-index: 1;\n  top: 0;\n  left: 50%;\n  transform: translateX(-50%);\n  max-width: 900px;\n  width: 100%;\n  height: 100%;\n  transition: all 0.3s;\n}\n.vue-modal-body[data-v-39cfb858] {\n  position: relative;\n  right: 1rem;\n  top: 8%;\n  margin-left: auto;\n  border: 1px solid #000;\n  width: 26%;\n  text-align: center;\n  border-radius: 8px;\n  background: #eaeaea;\n}\n.vue-edit-menu i[data-v-39cfb858] {\n  padding-left: 5px;\n}\n.memory-detail-modal[data-v-39cfb858] {\n  position: fixed;\n  top: 0;\n  left: 0;\n  background-color: #fff;\n  z-index: 10;\n  width: 100%;\n  height: 100%;\n  overflow-y: auto;\n}\n.memory-images-container[data-v-39cfb858] {\n  margin: 20px;\n}\n.memory-item[data-v-39cfb858] {\n  text-align: center;\n}\n.memory-item-img[data-v-39cfb858] {\n  position: relative;\n  height: auto;\n  border: 2px solid #000;\n  border-radius: 8px;\n  box-shadow: 0 0 10px rgb(0 0 0 / 20%);\n}\n.memory-item-img img[data-v-39cfb858] {\n  border-radius: 8px;\n}\n.like-profilePic[data-v-39cfb858] {\n  border: 1px solid #000;\n  border-radius: 50%;\n}\n.like-profilePic img[data-v-39cfb858] {\n  border-radius: 50%;\n}\n.editing-wrap[data-v-39cfb858] {\n  margin: 1rem auto;\n}\n.caption[data-v-39cfb858] {\n  margin: 1rem auto;\n  display: block;\n  text-align: center;\n  width: 100%;\n}\n.entry[data-v-39cfb858] {\n  margin: 1rem auto;\n  display: block;\n  text-align: center;\n  width: 100%;\n}\n.slide-in-enter-active[data-v-39cfb858], .slide-in-leave-active[data-v-39cfb858] {\n  transform: translate(0px, 0px);\n  transition: transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;\n}\n.slide-in-enter[data-v-39cfb858], .slide-in-leave-to[data-v-39cfb858] {\n  transform: translateY(100vh) translateY(0px);\n}\n.fade-enter-active[data-v-39cfb858],\n.fade-leave-active[data-v-39cfb858] {\n  transition: opacity 0.3s ease;\n}\n.fade-enter-from[data-v-39cfb858],\n.fade-leave-to[data-v-39cfb858] {\n  opacity: 0;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.splide__slide[data-v-39cfb858] {\n  opacity: .6;\n}\n/* 選択されているサムネイルだけ透過しない */\n.splide__slide.is-active[data-v-39cfb858] {\n  opacity: 1;\n}\n/* 画像サイズ調整 */\n.splide__slide img[data-v-39cfb858] {\n  height: auto;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.splide__list[data-v-39cfb858] {\n  height: auto;\n}\n\n\n/* 追加ボタンのスタイル */\nbutton[data-v-39cfb858] {\n  margin-left: 10px;\n  background-color: #6299e6;\n  border: none;\n  color: white;\n  padding: 5px 10px;\n  border-radius: 5px;\n  cursor: pointer;\n}\n.vue-memory-meatball-menu i[data-v-39cfb858] {\n  font-size: 1.5rem;\n}\n.vue-modal-container[data-v-39cfb858] {\n  position: absolute;\n  z-index: 1;\n  top: 0;\n  left: 50%;\n  transform: translateX(-50%);\n  max-width: 900px;\n  width: 100%;\n  height: 100%;\n  transition: all 0.3s;\n}\n.vue-modal-body[data-v-39cfb858] {\n  position: relative;\n  right: 1rem;\n  top: 8%;\n  margin-left: auto;\n  border: 1px solid #000;\n  width: 26%;\n  text-align: center;\n  border-radius: 8px;\n  background: #eaeaea;\n}\n.vue-edit-menu i[data-v-39cfb858] {\n  padding-left: 5px;\n}\n.memory-detail-modal[data-v-39cfb858] {\n  position: fixed;\n  top: 0;\n  left: 50%;\n  transform: translateX(-50%);\n  background-color: #fff;\n  z-index: 10;\n  width: 100%;\n  height: 100%;\n  max-width: 900px;\n  overflow-y: auto;\n}\n.memory-images-container[data-v-39cfb858] {\n  margin: 20px;\n}\n.memory-item[data-v-39cfb858] {\n  text-align: center;\n}\n.memory-item-img[data-v-39cfb858] {\n  position: relative;\n  height: auto;\n  border: 2px solid #000;\n  border-radius: 8px;\n  box-shadow: 0 0 10px rgb(0 0 0 / 20%);\n}\n.memory-item-img img[data-v-39cfb858] {\n  border-radius: 8px;\n}\n.like-profilePic[data-v-39cfb858] {\n  border: 1px solid #000;\n  border-radius: 50%;\n}\n.like-profilePic img[data-v-39cfb858] {\n  border-radius: 50%;\n}\n.editing-wrap[data-v-39cfb858] {\n  margin: 1rem auto;\n}\n.caption[data-v-39cfb858] {\n  margin: 1rem auto;\n  display: block;\n  text-align: center;\n  width: 100%;\n}\n.entry[data-v-39cfb858] {\n  margin: 1rem auto;\n  display: block;\n  text-align: center;\n  width: 100%;\n}\n.slide-in-enter-active[data-v-39cfb858], .slide-in-leave-active[data-v-39cfb858] {\n  transition: transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;\n}\n.slide-in-enter[data-v-39cfb858], .slide-in-leave-to[data-v-39cfb858] {\n  transform: translateY(100%);\n}\n.fade-enter-active[data-v-39cfb858],\n.fade-leave-active[data-v-39cfb858] {\n  transition: opacity 0.3s ease;\n}\n.fade-enter-from[data-v-39cfb858],\n.fade-leave-to[data-v-39cfb858] {\n  opacity: 0;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

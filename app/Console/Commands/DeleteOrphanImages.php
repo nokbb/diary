@@ -39,25 +39,25 @@ class DeleteOrphanImages extends Command
      */
     public function handle()
     {
-        // 画像が保存されているディレクトリのパス
-        $directoryPath = storage_path('app/public/uploads');
+        // // 画像が保存されているディレクトリのパス
+        // $directoryPath = storage_path('app/public/uploads');
 
-        // すべての画像ファイルを取得
-        $allFiles = File::files($directoryPath);
+        // // すべての画像ファイルを取得
+        // $allFiles = File::files($directoryPath);
 
-        foreach ($allFiles as $file) {
-            // データベースに存在するかを確認
-            $fileName = $file->getFilename();
-            $exists = Memory::where('file_path', $fileName)->exists();
+        // foreach ($allFiles as $file) {
+        //     // データベースに存在するかを確認
+        //     $fileName = $file->getFilename();
+        //     $exists = Memory::where('file_path', $fileName)->exists();
 
-            // データベースに存在しない場合、画像を削除
-            if (!$exists) {
-                File::delete($file->getPathname());
-                $this->info("Deleted orphaned image: " . $fileName);
-            }
-        }
+        //     // データベースに存在しない場合、画像を削除
+        //     if (!$exists) {
+        //         File::delete($file->getPathname());
+        //         $this->info("Deleted orphaned image: " . $fileName);
+        //     }
+        // }
 
-        $this->info("Orphaned image deletion process complete.");
+        // $this->info("Orphaned image deletion process complete.");
         return 0;
     }
 }

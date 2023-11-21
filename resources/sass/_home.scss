@@ -67,6 +67,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    border-radius: 50%;
   }
 }
 
@@ -83,7 +84,7 @@
 
   img {
     border-radius: 5%;
-    object-fit: contain;
+    object-fit: cover;
   }
 }
 
@@ -94,6 +95,8 @@
 
 .like-profilePic img {
   border-radius: 50%;
+  object-fit: fill;
+  height: 100%;
 }
 
 .diary-caption {

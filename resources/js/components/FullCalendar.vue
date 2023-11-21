@@ -544,11 +544,13 @@ button {
 .memory-detail-modal {
   position: fixed;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   background-color: #fff;
   z-index: 10;
   width: 100%;
   height: 100%;
+  max-width: 900px;
   overflow-y: auto;
 }
 
@@ -599,11 +601,11 @@ button {
 }
 
 .slide-in-enter-active, .slide-in-leave-active {
-  transform: translate(0px, 0px);
   transition: transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
 }
 .slide-in-enter, .slide-in-leave-to {
-  transform: translateY(100vh) translateY(0px);
+  transform: translateY(100%);
+
 }
 
 .fade-enter-active,
